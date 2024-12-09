@@ -19,6 +19,6 @@ public class Counter {
     }
 
     public IntegerProperty counterProperty() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return value;
     }
 }

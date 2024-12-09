@@ -13,9 +13,27 @@ public class App extends Application {
     public void start(final Stage primaryStage) throws Exception {
         primaryStage.setTitle("Controls Exercise!");
         final VBox mainPane = new VBox();
+        final HBox hbox = new HBox();
         final Counter counter = new Counter();
-        // TODO aggiungere gli elementi come descritto da readme
-        primaryStage.setScene(new Scene(mainPane));
+        final Label count = new Label("0");
+        
+        Button butDec = new Button("-");
+        Button butAdd = new Button("+");
+        butAdd.setMinWidth(100);
+        butDec.setMinWidth(100);
+
+        // Imposta gli eventi dei pulsanti
+        butAdd.setOnAction(event -> counter.increment());
+        butDec.setOnAction(event -> counter.decrement());
+
+        // Collega la proprietà del contatore al testo della Label
+        count.textProperty().bind(counter.counterProperty().asString());
+
+        // Aggiungi pulsanti e Label ai layout
+        hbox.getChildren().addAll(butAdd, butDec);
+        mainPane.getChildren().addAll(count, hbox);
+
+        primaryStage.setScene(new Scene(mainPane, 300, 300));
         primaryStage.show();
     }
 
