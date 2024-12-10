@@ -32,10 +32,8 @@ public class App extends Application {
 
         Label title = new Label("Todo App");
         title.getStyleClass().addAll("accent", "title-1");
-
         TextField taskField = new TextField();
         Button addButton = new Button("Add");
-
         leftPane.getChildren().addAll(title, taskField, addButton);
 
         VBox rightPane = new VBox();
@@ -48,7 +46,7 @@ public class App extends Application {
         HBox taskArea = new HBox();
         VBox.setVgrow(taskArea, Priority.ALWAYS);
         taskArea.setId("tasks-area");
-
+        
         VBox todoPane = new VBox();
         todoPane.setAlignment(Pos.TOP_CENTER);
         Label toDo = new Label("Todo");
@@ -62,10 +60,10 @@ public class App extends Application {
         donePane.getChildren().add(done);
 
         // Setta la larghezza minima delle liste
-        HBox.setHgrow(toDo, Priority.ALWAYS);
-        HBox.setHgrow(toDo, Priority.ALWAYS);
+        HBox.setHgrow(todoPane, Priority.ALWAYS);
+        HBox.setHgrow(donePane, Priority.ALWAYS);
 
-        taskArea.getChildren().addAll(toDo, donePane);
+        taskArea.getChildren().addAll(todoPane, donePane);
         rightPane.getChildren().addAll(tit2, taskArea);
 
         // Aggiungo dei task di esempio
@@ -75,6 +73,7 @@ public class App extends Application {
         
         // Aggiungo dei task completati di esempio
         VBox doneTask = new VBox(new Label("Task 2"));
+        doneTask.setAlignment(Pos.CENTER_LEFT);
         doneTask.getStyleClass().add("task");
         donePane.getChildren().add(doneTask);
 
@@ -99,11 +98,14 @@ public class App extends Application {
     public static Node createTaskSection(String content) {
         HBox task = new HBox();
         task.getStyleClass().add("task");
+        HBox.setHgrow(task, Priority.ALWAYS);
+
+        task.setAlignment(Pos.CENTER_LEFT);
 
         Label taskLabel = new Label(content);
         VBox text = new VBox(taskLabel);
         Button doneBut = new Button("X");
-        HBox.setHgrow(text,Priority.ALWAYS);
+        HBox.setHgrow(text, Priority.ALWAYS);
 
         task.getChildren().addAll(text, doneBut);
         return task;
