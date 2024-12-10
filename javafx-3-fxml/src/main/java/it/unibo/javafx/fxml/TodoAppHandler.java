@@ -33,6 +33,9 @@ public class TodoAppHandler {
     @FXML
     public final void addTodo(final MouseEvent evt) {
         // aggiungi un nuovo todo solo se il testo non e vuoto
+        if(Objects.nonNull(todoText.getText()) && !todoText.getText().isEmpty()) {
+            model.addNewTodo(todoText.getText());
+        }
     }
 
     // Aggiornamento dei todos, vengono tolti tutti quelli presenti e aggiunti quelli nuovi
@@ -43,7 +46,8 @@ public class TodoAppHandler {
 
     // Aggiornamento dei completedTodos, vengono tolti tutti quelli presenti e aggiunti quelli nuovi
     private void updateDone(List<Todo> todos) {
-        // Simile a quello di prima
+        tasksDone.getChildren().clear();
+        todos.forEach(this::insertCompleted);
     }
 
     // Inserisce un nuovo todo nella lista dei todos
@@ -51,13 +55,28 @@ public class TodoAppHandler {
     // il bottone viene associato ad un evento che chiama il metodo completeTodo del modello!!
     private void insertTodoGraphic(Todo todo) {
         var todoGraphic = new HBox();
-        // TODO
+        todoGraphic.getStyleClass().add("task");
+
+        TextField taskNew = new TextField(todo.getContent());
+        taskNew.setEditable(false);
+
+        Button taskBut = new Button("X");
+        taskBut.setOnMouseClicked(event -> model.completeTodo(todo));
+
+        todoGraphic.getChildren().addAll(taskNew, taskBut);
+        tasksTodo.getChildren().add(todoGraphic);
     }
 
     // Inserisce un nuovo todo nella lista dei completedTodos
     // qui ci sarà solo il testo del todo
     private void insertCompleted(Todo todo) {
         var todoGraphic = new HBox();
-        // TODO
+        todoGraphic.getStyleClass().add("task");
+
+        TextField taskDone = new TextField(todo.getContent());
+        taskDone.setEditable(false);
+
+        todoGraphic.getChildren().add(taskDone);
+        tasksDone.getChildren().add(taskDone);
     }
 }
